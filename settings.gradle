@@ -1,2 +1,3 @@
 rootProject.name = 'inflearn-msa-project'
+include 'user-service'
 
