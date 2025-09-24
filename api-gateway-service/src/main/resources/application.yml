@@ -11,6 +11,8 @@ eureka:
 spring:
   application:
     name: api-gateway-service
+#  config:
+#    import: "optional:configserver:http://localhost:8888"
   cloud:
     gateway:
       server:
@@ -61,6 +63,17 @@ spring:
               predicates:
                 - Path=/order-service/**
 
-token:
-  expired: 86400000 # 1 day in milliseconds
-  secret: my-very-long-secret-key-1234567890123456
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+            - refresh
+            - health
+            - beans
+            - info
+            - httpexchanges
+
+#token:
+#  expired: 86400000 # 1 day in milliseconds
+#  secret: my-very-long-secret-key-1234567890123456
