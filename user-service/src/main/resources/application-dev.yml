@@ -1,11 +1,9 @@
 server:
-  port: 0
+  port: 60000
 
 spring:
   application:
     name: user-service
-#  profiles:
-#    active: dev
   h2:
     console:
       enabled: true
@@ -24,11 +22,6 @@ spring:
     user:
       name: user
       password: $2a$10$mQosdrabQmUwQ4nxsLnVKOwoxS7vFFBJr37twnIXvixAd/oMdVhgS
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
 eureka:
   instance:
@@ -48,11 +41,9 @@ management:
           - health
           - beans
           - info
-          - busrefresh
-
 
 greeting:
-  message: Welcome to the Simple E-Commerce. (Spring Boot)
+  message: Welcome to the Simple E-Commerce. (Spring Boot Dev Profile)
 
 token:
   expired: 86400000 # 1 day in milliseconds

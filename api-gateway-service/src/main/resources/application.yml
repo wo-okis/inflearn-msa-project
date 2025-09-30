@@ -54,6 +54,14 @@ spring:
                 - RemoveRequestHeader=Cookie
                 - RewritePath=/user-service/(?<segment>.*), /$\{segment}
                 - AuthorizationHeaderFilter
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user-service/actuator/**
+                - Method=GET,POST
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:
@@ -62,17 +70,22 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
                 - Path=/order-service/**
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 management:
   endpoints:
     web:
       exposure:
         include:
-            - refresh
-            - health
-            - beans
-            - info
-            - httpexchanges
+          - refresh
+          - health
+          - beans
+          - info
+          - busrefresh
 
 #token:
 #  expired: 86400000 # 1 day in milliseconds

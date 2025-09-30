@@ -71,12 +71,14 @@ public class UserController {
                         "port(server.port) = %s,</br>" +
                         "gateway ip = %s,</br>" +
                         "token secret = %s,</br>" +
-                        "token expiration time = %s",
+                        "token expiration time = %s, </br>" +
+                        "welcome message = %s",
                 env.getProperty("local.server.port"),
                 env.getProperty("server.port"),
                 env.getProperty("gateway.ip"),
                 env.getProperty("token.secret"),
-                env.getProperty("token.expired"));
+                env.getProperty("token.expired"),
+                env.getProperty("greeting.message"));
     }
 
     @GetMapping("/welcome")
