@@ -1,6 +1,10 @@
 server:
   port: 0
 
+logging:
+  level:
+    com.wookis.userservice.client: DEBUG
+
 spring:
   application:
     name: user-service

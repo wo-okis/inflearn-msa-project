@@ -1,9 +1,11 @@
 package com.wookis.userservice.service;
 
+import com.wookis.userservice.client.OrderServiceClient;
 import com.wookis.userservice.dto.response.ResponseOrder;
 import com.wookis.userservice.dto.response.UserDto;
 import com.wookis.userservice.entity.UserEntity;
 import com.wookis.userservice.repository.UserRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final OrderServiceClient orderServiceClient;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -50,7 +54,13 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-        ArrayList<ResponseOrder> ordersList = new ArrayList<>();
+        List<ResponseOrder> ordersList = null;
+        try {
+            ordersList = orderServiceClient.getOrders(userId);
+        } catch (FeignException e) {
+            log.error("Error occurred while calling order service: " + e.getMessage());
+        }
+//        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
         userDto.setOrders(ordersList);
 
         return userDto;
